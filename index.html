@@ -1,128 +1,253 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CALPLAST - Maintenance System</title>
-    <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="mobile-web-app-capable" content="yes">
+    <title>CALPLAST | Maintenance System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <style>
-        :root { --navy: #1e3a8a; --yellow: #facc15; --gray: #f8fafc; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #cbd5e1; display: flex; justify-content: center; padding: 20px; margin: 0; }
-        .card { background: white; width: 100%; max-width: 400px; padding: 2rem; border-radius: 1.5rem; box-shadow: 0 10px 25px rgba(0,0,0,0.2); border-top: 8px solid var(--yellow); position: relative; }
-        
-        /* تصميم الشعار */
-        .header { text-align: center; margin-bottom: 25px; }
-        .brand { font-size: 32px; font-weight: 800; color: var(--navy); letter-spacing: 2px; margin: 0; }
-        .service-tag { color: #dc2626; font-weight: bold; font-size: 14px; text-transform: uppercase; margin-top: -5px; display: block; }
-        
-        /* الساعة الحية */
-        #live-clock { background: var(--navy); color: white; padding: 8px; border-radius: 8px; font-size: 18px; font-weight: bold; margin: 15px 0; text-align: center; }
+        :root {
+            --primary: #1e3a8a; /* الكحلي */
+            --accent: #facc15;  /* الأصفر */
+            --success: #10b981;
+            --danger: #ef4444;
+            --bg: #e2e8f0;
+        }
 
-        label { display: block; margin: 15px 0 5px; font-weight: bold; color: var(--navy); }
-        select, textarea { width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 10px; margin-bottom: 15px; font-size: 16px; box-sizing: border-box; }
-        
-        .btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        button { padding: 16px; border: none; border-radius: 12px; color: white; font-weight: bold; cursor: pointer; font-size: 16px; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .btn-in { background: #16a34a; }
-        .btn-out { background: #dc2626; }
-        .btn-reason { background: var(--navy); grid-column: span 2; }
-        
-        #reason-section { display: none; background: #fffbeb; padding: 15px; border-radius: 12px; border: 1px dashed var(--yellow); margin-bottom: 15px; }
-        #status-msg { margin-top: 20px; text-align: center; font-weight: bold; padding: 10px; border-radius: 8px; }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #334155;
+        }
+
+        .app-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            width: 90%;
+            max-width: 420px;
+            padding: 30px;
+            border-radius: 30px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            text-align: center;
+        }
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: 1px;
+            margin: 0;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #64748b;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .input-section {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 15px;
+        }
+
+        select, textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #cbd5e1;
+            border-radius: 15px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8fafc;
+        }
+
+        select:focus, textarea:focus {
+            border-color: var(--accent);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(250, 204, 21, 0.2);
+        }
+
+        .action-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        button {
+            border: none;
+            border-radius: 15px;
+            padding: 15px;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s active;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: white;
+        }
+
+        button i { font-size: 20px; }
+
+        .btn-in { background: var(--success); box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); }
+        .btn-out { background: var(--danger); box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3); }
+        .btn-extra { 
+            grid-column: span 2; 
+            background: var(--primary); 
+            flex-direction: row; 
+            justify-content: center;
+        }
+
+        button:active { transform: scale(0.95); opacity: 0.9; }
+
+        #reason-box {
+            display: none;
+            margin-top: 15px;
+            animation: slideDown 0.4s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #status {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 700;
+            display: none;
+        }
+
+        .loading-spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--accent);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-<div class="card">
+<div class="app-container">
     <div class="header">
-        <div class="brand">CALPLAST</div>
-        <span class="service-tag">Service Maintenance</span>
+        <i class="fa-solid fa-gears" style="font-size: 40px; color: var(--accent);"></i>
+        <h1 class="logo-text">CALPLAST</h1>
+        <div class="subtitle">Maintenance Service Portal</div>
     </div>
 
-    <div id="live-clock">00:00:00</div>
-    
-    <label><i class="fas fa-user-gear"></i> اختيار الفني:</label>
-    <select id="workerName">
-        <option value="">-- اختر الاسم من القائمة --</option>
-        <option value="Meziane Hamel">Meziane Hamel</option>
-        <option value="Aymen Daamiche">Aymen Daamiche</option>
-        <option value="Madassi Omar El Farouq">Madassi Omar El Farouq</option>
-    </select>
-
-    <div id="reason-section">
-        <label><i class="fas fa-pen-to-square"></i> سبب التبرير:</label>
-        <textarea id="reasonText" rows="3" placeholder="اكتب سبب الخروج المبكر أو الغياب..."></textarea>
+    <div class="input-section">
+        <label><i class="fa-solid fa-user-gear"></i> اسم الفني المسؤول:</label>
+        <select id="name">
+            <option value="">إختر الإسم من القائمة...</option>
+            <option value="Aymene Daamiche">Aymene Daamiche</option>
+            <option value="abdellatif">abdellatif</option>
+            <option value="Jawad">Jawad</option>
+            <option value="Houssem">Houssem</option>
+            <option value="Abd baset">Abd baset</option>
+            <option value="Ahmed">Ahmed</option>
+            <option value="khawla">khawla</option>
+        </select>
     </div>
 
-    <div class="btn-group">
-        <button onclick="submitData('دخول')" class="btn-in"><i class="fas fa-sign-in-alt"></i> دخول</button>
-        <button onclick="submitData('خروج')" class="btn-out"><i class="fas fa-sign-out-alt"></i> خروج</button>
-        <button onclick="toggleReason()" class="btn-reason"><i class="fas fa-file-signature"></i> إضافة تبرير غياب/خروج</button>
+    <div id="reason-box">
+        <label><i class="fa-solid fa-pen-to-square"></i> سبب الغياب / الخروج المبكر:</label>
+        <textarea id="reason" rows="3" placeholder="اكتب السبب هنا..."></textarea>
     </div>
 
-    <div id="status-msg"></div>
+    <div class="action-grid">
+        <button onclick="send('دخول')" class="btn-in">
+            <i class="fa-solid fa-right-to-bracket"></i> تسجيل دخول
+        </button>
+        <button onclick="send('خروج')" class="btn-out">
+            <i class="fa-solid fa-right-from-bracket"></i> تسجيل خروج
+        </button>
+        <button onclick="toggleReason()" class="btn-extra">
+            <i class="fa-solid fa-clipboard-question"></i> إضافة تبرير أو ملاحظة
+        </button>
+    </div>
+
+    <div id="status"></div>
 </div>
 
 <script>
-    // 1. تحديث الساعة الحية
-    function updateClock() {
-        const now = new Date();
-        document.getElementById('live-clock').innerText = now.toLocaleTimeString('ar-DZ');
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
-
-    // 2. إرسال البيانات
-    const scriptURL ='https://script.google.com/macros/s/AKfycbxxEewf44FjveBrOWGWxgWny5zPg9op-P6tsq0UYpdtRk9ghX0AIwprg20G4J7VNqyd/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxxEewf44FjveBrOWGWxgWny5zPg9op-P6tsq0UYpdtRk9ghX0AIwprg20G4J7VNqyd/exec';
 
     function toggleReason() {
-        const section = document.getElementById('reason-section');
-        section.style.display = (section.style.display === 'block') ? 'none' : 'block';
+        const box = document.getElementById('reason-box');
+        box.style.display = box.style.display === 'block' ? 'none' : 'block';
     }
 
-    function submitData(statusType) {
-        const name = document.getElementById('workerName').value;
-        const reason = document.getElementById('reasonText').value;
-        const msg = document.getElementById('status-msg');
+    function send(type) {
+        const name = document.getElementById('name').value;
+        const reason = document.getElementById('reason').value;
+        const statusDiv = document.getElementById('status');
 
-        if (!name) { alert("من فضلك اختر اسمك أولاً"); return; }
+        if (!name) {
+            alert("يرجى اختيار الاسم أولاً");
+            return;
+        }
 
-        msg.innerText = "⏳ جاري التوثيق وإرسال البيانات...";
-        msg.style.background = "#dbeafe";
-        msg.style.color = "#1e40af";
+        statusDiv.style.display = 'block';
+        statusDiv.style.background = '#dbeafe';
+        statusDiv.style.color = '#1e3a8a';
+        statusDiv.innerHTML = '<div class="loading-spinner"></div> جاري تأمين الاتصال بالموقع...';
 
-        navigator.geolocation.getCurrentPosition((pos) => {
-            const data = {
+        navigator.geolocation.getCurrentPosition(pos => {
+            const payload = {
                 name: name,
-                status: statusType,
+                status: type,
                 reason: reason,
                 lat: pos.coords.latitude,
                 long: pos.coords.longitude
             };
 
-            fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) })
+            fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) })
             .then(() => {
-                msg.innerText = "✅ تم تسجيل العملية بنجاح";
-                msg.style.background = "#dcfce7";
-                msg.style.color = "#15803d";
-                document.getElementById('reasonText').value = "";
-                document.getElementById('reason-section').style.display = 'none';
-                setTimeout(() => msg.style.display = 'none', 5000);
+                statusDiv.style.background = '#dcfce7';
+                statusDiv.style.color = '#15803d';
+                statusDiv.innerHTML = '✅ تم تسجيل العملية بنجاح في السجل';
+                document.getElementById('reason').value = '';
+                setTimeout(() => { statusDiv.style.display = 'none'; }, 4000);
             })
             .catch(() => {
-                msg.innerText = "❌ فشل الإرسال، تحقق من الإنترنت";
-                msg.style.background = "#fee2e2";
-                msg.style.color = "#b91c1c";
+                statusDiv.style.background = '#fee2e2';
+                statusDiv.style.color = '#b91c1c';
+                statusDiv.innerHTML = '❌ فشل الاتصال، تأكد من الإنترنت';
             });
         }, () => {
-            alert("فشل تحديد الموقع. يرجى تفعيل الـ GPS للمصنع");
+            alert("فشل تحديد الموقع! يرجى تفعيل الـ GPS");
+            statusDiv.style.display = 'none';
         });
     }
 </script>
